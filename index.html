@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASG | شركة تقنية وإبداعية - نحول أفكارك إلى واقع رقمي</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      fontFamily:{cairo:['Cairo','sans-serif'], mono:['JetBrains Mono','monospace']},
+      colors:{
+        primary:'#DC2626',
+        primaryDark:'#991B1B',
+        dark:'#09090B',
+        dark2:'#18181B'
+      },
+      animation:{
+        'float':'float 6s ease-in-out infinite',
+        'pulse-slow':'pulse 3s infinite',
+      }
+    }
+  }
+}
+</script>
+<style>
+*{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:#FFFFFF;color:#09090B;overflow-x:hidden}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:#F4F4F5}
+::-webkit-scrollbar-thumb{background:#DC2626;border-radius:999px}
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.glass{background:rgba(255,255,255,0.8);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,0.05)}
+.card-hover{transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
+.card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px -12px rgba(220,38,38,0.15),0 12px 24px -8px rgba(0,0,0,0.08);border-color:rgba(220,38,38,0.2)!important}
+.progress-line{height:2px;background:#E4E4E7;flex:1;position:relative;overflow:hidden}
+.progress-line.fill::after{content:'';position:absolute;inset:0;background:#DC2626;transform-origin:right;animation:fillLine 0.5s forwards}
+@keyframes fillLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-grid{background-image:linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);background-size:40px 40px}
+.template-check{position:absolute;inset:0;background:rgba(220,38,38,0.92);display:flex;align-items:center;justify-content:center;opacity:0;transition:0.3s}
+.group:hover .template-check{opacity:1}
+.group.selected .template-check{opacity:1}
+.group.selected{ring:2px solid #DC2626;border-color:#DC2626!important}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#DC2626!important;box-shadow:0 0 0 3px rgba(220,38,38,0.1)}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Header -->
+<header id="header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-xl border-b border-zinc-100">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-4">
+    <div class="flex items-center gap-8">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black text-[18px] tracking-tighter">ASG</div>
+        <div class="hidden sm:block">
+          <div class="font-black text-[18px] leading-none tracking-tight">ASG</div>
+          <div class="text-[10px] tracking-[0.2em] text-zinc-500 font-semibold -mt-0.5">TECH & CREATIVE</div>
+        </div>
+      </a>
+      <nav class="hidden lg:flex items-center gap-1">
+        <a href="#services" class="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-full hover:bg-zinc-50 transition">الخدمات</a>
+        <a href="#templates" class="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-full hover:bg-zinc-50 transition">القوالب</a>
+        <a href="#process" class="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-full hover:bg-zinc-50 transition">كيف نعمل</a>
+        <a href="#about" class="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-full hover:bg-zinc-50 transition">من نحن</a>
+        <a href="#faq" class="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-full hover:bg-zinc-50 transition">الأسئلة</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div class="hidden md:flex items-center gap-2 text-xs font-medium text-zinc-500">
+        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> متاحون لمشاريع جديدة
+      </div>
+      <button onclick="openAuth('login')" id="loginBtn" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-semibold hover:border-zinc-300 hover:bg-zinc-50 transition">
+        <i class="ri-user-line"></i> تسجيل الدخول
+      </button>
+      <div id="userMenu" class="hidden items-center gap-3">
+        <div class="hidden sm:block text-end">
+          <div id="userNameDisplay" class="text-sm font-bold leading-none">أحمد محمد</div>
+          <div class="text-xs text-zinc-500">عميل مميز</div>
+        </div>
+        <img id="userAvatar" src="https://i.pravatar.cc/100?img=12" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/20">
+        <button onclick="logout()" class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center hover:bg-zinc-200 transition"><i class="ri-logout-box-line text-sm"></i></button>
+      </div>
+      <button onclick="openOrder()" class="inline-flex items-center gap-2 bg-primary hover:bg-primaryDark text-white px-5 sm:px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:-translate-y-0.5">
+        ابدأ مشروعك <i class="ri-arrow-left-line hidden sm:block"></i>
+      </button>
+      <button id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center"><i class="ri-menu-line text-xl"></i></button>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden lg:hidden border-t border-zinc-100 bg-white px-4 py-4 space-y-1">
+    <a href="#services" class="block px-4 py-3 rounded-xl hover:bg-zinc-50 font-medium">الخدمات</a>
+    <a href="#templates" class="block px-4 py-3 rounded-xl hover:bg-zinc-50 font-medium">القوالب المرئية</a>
+    <a href="#process" class="block px-4 py-3 rounded-xl hover:bg-zinc-50 font-medium">كيف نعمل</a>
+    <a href="#about" class="block px-4 py-3 rounded-xl hover:bg-zinc-50 font-medium">من نحن</a>
+    <a href="#faq" class="block px-4 py-3 rounded-xl hover:bg-zinc-50 font-medium">الأسئلة الشائعة</a>
+    <button onclick="openAuth('login')" class="w-full mt-3 py-3 rounded-full border border-zinc-200 font-bold">تسجيل الدخول</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="relative pt-[72px] overflow-hidden bg-[#FCFCFC]">
+  <div class="absolute inset-0 hero-grid opacity-[0.6]"></div>
+  <div class="absolute -top-40 -left-40 w-[700px] h-[700px] bg-primary/5 rounded-full blur-[120px]"></div>
+  <div class="absolute top-20 -right-40 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[120px]"></div>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-8 lg:py-12">
+      <!-- Text -->
+      <div class="order-1">
+        <div class="inline-flex items-center gap-2 bg-white border border-zinc-200 rounded-full px-3 py-1.5 text-xs font-semibold shadow-sm mb-6">
+          <span class="bg-primary text-white px-2.5 py-1 rounded-full text-[10px] font-black tracking-widest">جديد</span>
+          <span class="text-zinc-700">منصة ASG أصبحت مدعومة بالـ AI Agents 🤖</span>
+          <i class="ri-arrow-left-s-line text-zinc-400"></i>
+        </div>
+        <h1 class="text-[32px] sm:text-[42px] lg:text-[54px] font-black leading-[0.95] tracking-tight">
+          نحوّل أفكارك إلى<br>
+          <span class="relative inline-block">
+            <span class="relative z-10 bg-gradient-to-l from-primary to-red-500 bg-clip-text text-transparent">منتجات رقمية</span>
+            <div class="absolute bottom-1 inset-x-0 h-3 bg-primary/10 -rotate-1"></div>
+          </span><br>
+          تنبض بالحياة
+        </h1>
+        <p class="mt-5 text-[15px] sm:text-[17px] leading-7 text-zinc-600 max-w-[560px]">ASG شريكك التقني والإبداعي لبناء مواقع، تطبيقات، هويات بصرية ومحتوى مرئي بمعايير عالمية. من الفكرة إلى الإطلاق — بجودة Premium وسرعة تنفيذ.</p>
+        
+        <div class="flex flex-wrap gap-3 mt-8">
+          <button onclick="openOrder()" class="inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full font-bold shadow-xl shadow-primary/20 hover:bg-primaryDark hover:-translate-y-1 transition-all">
+            ابدأ مشروعك الآن <i class="ri-sparkling-line"></i>
+          </button>
+          <a href="#services" class="inline-flex items-center gap-2 bg-white border border-zinc-200 px-7 py-3.5 rounded-full font-bold hover:border-zinc-300 hover:bg-zinc-50 transition">
+            <i class="ri-compass-3-line"></i> استكشف خدماتنا
+          </a>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-6 mt-8 pt-8 border-t border-zinc-100">
+          <div class="flex items-center gap-3">
+            <div class="flex -space-x-2 space-x-reverse">
+              <img src="https://i.pravatar.cc/100?img=33" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+              <img src="https://i.pravatar.cc/100?img=14" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+              <img src="https://i.pravatar.cc/100?img=8" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+              <div class="w-8 h-8 rounded-full bg-zinc-900 text-white border-2 border-white flex items-center justify-center text-xs font-bold">+2k</div>
+            </div>
+            <div class="text-xs">
+              <div class="flex text-amber-400 text-sm leading-none">★★★★★</div>
+              <div class="font-bold">4.9/5 من 1,200+ تقييم</div>
+            </div>
+          </div>
+          <div class="h-10 w-px bg-zinc-200 hidden sm:block"></div>
+          <div class="flex gap-6">
+            <div><div class="font-black text-xl leading-none">+500</div><div class="text-xs text-zinc-500 font-medium">مشروع مكتمل</div></div>
+            <div><div class="font-black text-xl leading-none">98%</div><div class="text-xs text-zinc-500 font-medium">رضا العملاء</div></div>
+            <div><div class="font-black text-xl leading-none">24/7</div><div class="text-xs text-zinc-500 font-medium">دعم فني</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="order-2 relative lg:h-[560px] flex items-center">
+        <div class="relative w-full">
+          <!-- Main card -->
+          <div class="relative bg-white rounded-[24px] sm:rounded-[32px] shadow-[0_32px_80px_-16px_rgba(0,0,0,0.15)] border border-zinc-100 overflow-hidden">
+            <div class="h-10 flex items-center justify-between px-5 border-b border-zinc-100 bg-zinc-50/50">
+              <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="w-3 h-3 rounded-full bg-amber-400"></span><span class="w-3 h-3 rounded-full bg-emerald-500"></span></div>
+              <div class="flex items-center gap-2 text-xs font-medium text-zinc-500"><i class="ri-lock-2-line"></i> asg.sa/dashboard</div>
+              <div class="w-6 h-6 rounded-full bg-white border border-zinc-200 flex items-center justify-center"><i class="ri-more-line text-zinc-400"></i></div>
+            </div>
+            <div class="p-4 sm:p-6">
+              <div class="flex gap-3 mb-5">
+                <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center"><i class="ri-dashboard-line"></i></div>
+                <div><div class="font-bold text-sm">لوحة تحكم المبيعات</div><div class="text-xs text-zinc-500">تحديث مباشر • الآن</div></div>
+                <div class="ms-auto flex items-center gap-2"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span><span class="text-xs font-bold text-emerald-600">مباشر</span></div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop" class="w-full h-[200px] sm:h-[240px] object-cover rounded-2xl">
+              <div class="grid grid-cols-3 gap-3 mt-4">
+                <div class="bg-zinc-50 rounded-2xl p-3 border border-zinc-100"><div class="text-xs text-zinc-500">الإيرادات</div><div class="font-black text-lg">284K <span class="text-emerald-600 text-xs font-bold">↑12%</span></div><div class="h-1 bg-zinc-200 rounded-full mt-2 overflow-hidden"><div class="h-full w-[72%] bg-primary"></div></div></div>
+                <div class="bg-zinc-900 text-white rounded-2xl p-3"><div class="text-xs text-zinc-400">العملاء</div><div class="font-black text-lg">1,429</div><div class="text-[10px] text-zinc-400 mt-1">+84 هذا الأسبوع</div></div>
+                <div class="bg-primary text-white rounded-2xl p-3"><div class="text-xs text-white/80">المشاريع</div><div class="font-black text-lg">37</div><div class="text-[10px] text-white/80 mt-1">6 قيد التنفيذ</div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating cards -->
+          <div class="absolute -right-2 sm:-right-6 top-10 sm:top-16 bg-white rounded-2xl shadow-xl border border-zinc-100 p-3 flex items-center gap-3 animate-float hidden sm:flex">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center"><i class="ri-check-line text-xl"></i></div>
+            <div><div class="text-xs font-black">تم تسليم المشروع</div><div class="text-xs text-zinc-500">موقع متجر إلكتروني • منذ ساعتين</div></div>
+          </div>
+          <div class="absolute -left-2 sm:-left-6 bottom-10 bg-white rounded-2xl shadow-xl border border-zinc-100 p-3 flex items-center gap-3 animate-float" style="animation-delay:1.5s">
+            <img src="https://i.pravatar.cc/100?img=15" class="w-10 h-10 rounded-full">
+            <div><div class="text-xs font-bold">سارة أحمد</div><div class="text-xs text-zinc-500">⭐️⭐️⭐️⭐️⭐️ “تجربة استثنائية!”</div></div>
+            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center"><i class="ri-heart-3-fill text-sm"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trusted by -->
+    <div class="border-y border-zinc-100 bg-white/50 backdrop-blur py-4 flex flex-wrap items-center justify-between gap-4 text-xs font-bold tracking-widest text-zinc-400">
+      <span>موثوق من قبل +500 شركة</span>
+      <div class="flex flex-wrap items-center gap-6 sm:gap-10 opacity-60">
+        <span class="flex items-center gap-2"><i class="ri-building-line text-lg"></i> STC</span>
+        <span class="flex items-center gap-2"><i class="ri-bank-line text-lg"></i> الراجحي</span>
+        <span class="flex items-center gap-2"><i class="ri-flight-takeoff-line text-lg"></i> المسافر</span>
+        <span class="flex items-center gap-2"><i class="ri-shopping-bag-line text-lg"></i> نون</span>
+        <span class="flex items-center gap-2"><i class="ri-customer-service-line text-lg"></i> مرسول</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-16 sm:py-20 bg-white">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+      <div>
+        <div class="inline-flex items-center gap-2 text-primary font-black text-xs tracking-[0.2em] mb-3"><span class="w-8 h-px bg-primary"></span> خدماتنا الاحترافية</div>
+        <h2 class="text-[28px] sm:text-[36px] font-black leading-tight">كل ما تحتاجه لبناء<br><span class="text-primary">حضورك الرقمي</span></h2>
+      </div>
+      <p class="text-zinc-600 max-w-[480px] leading-7">10 خدمات أساسية بجودة Premium. كل خدمة لها قوالبها، أمثلتها، وسير عمل مخصص — اختر وابدأ فورًا.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
+      <!-- Service cards generated -->
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center text-xl mb-4"><i class="ri-global-line"></i></div>
+        <h3 class="font-black leading-tight">إنشاء مواقع إلكترونية</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">مواقع شركات، متاجر، منصات حجز وتعليم بتصميم متجاوب وسرعة عالية.</p>
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('website')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center text-xl mb-4"><i class="ri-smartphone-line"></i></div>
+        <h3 class="font-black leading-tight">إنشاء تطبيقات</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">تطبيقات iOS و Android أصيلة وهجينة مع لوحات تحكم متكاملة.</p>
+        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7dfb?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('app')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl mb-4"><i class="ri-slideshow-line"></i></div>
+        <h3 class="font-black leading-tight">عروض تقديمية</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">شرائح Pitch Deck وعروض استثمارية بتصميم يقنع ويُلهم.</p>
+        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('presentation')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-violet-600 text-white flex items-center justify-center text-xl mb-4"><i class="ri-palette-line"></i></div>
+        <h3 class="font-black leading-tight">صور وتصميمات</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">تصاميم سوشال، إعلانات، مطبوعات وهوية بصرية يومية.</p>
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('design')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-red-500 text-white flex items-center justify-center text-xl mb-4"><i class="ri-movie-2-line"></i></div>
+        <h3 class="font-black leading-tight">إنشاء فيديوهات</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">مونتاج، إعلانات، ريلز، ومحتوى فيديو احترافي.</p>
+        <img src="https://images.unsplash.com/photo-1536243287037-7f1444775910?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('video')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl mb-4"><i class="ri-film-line"></i></div>
+        <h3 class="font-black leading-tight">رسوم متحركة</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">موشن جرافيك، 2D/3D، وشخصيات متحركة تروي قصتك.</p>
+        <img src="https://images.unsplash.com/photo-1626785774573-6dd65b279390?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('motion')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center text-xl mb-4 border border-zinc-800"><i class="ri-quill-pen-line"></i></div>
+        <h3 class="font-black leading-tight">شعارات وهويات</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">شعارات خالدة وهويات متكاملة تعكس شخصيتك.</p>
+        <img src="https://images.unsplash.com/photo-1626785774625-8a0f5b2793d6?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('brand')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl mb-4"><i class="ri-dashboard-3-line"></i></div>
+        <h3 class="font-black leading-tight">Dashboards و UI</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">واجهات مستخدم ولوحات بيانات وتصور معلومات.</p>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('dashboard')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-white border border-zinc-200 rounded-[24px] p-5 card-hover flex flex-col reveal">
+        <div class="w-12 h-12 rounded-2xl bg-pink-600 text-white flex items-center justify-center text-xl mb-4"><i class="ri-gamepad-line"></i></div>
+        <h3 class="font-black leading-tight">إنشاء وتصميم ألعاب</h3>
+        <p class="text-xs text-zinc-500 leading-relaxed mt-2 flex-1">ألعاب موبايل وويب وتجارب تفاعلية ممتعة.</p>
+        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=260&fit=crop" class="w-full h-28 object-cover rounded-xl mt-4">
+        <button onclick="openOrder('game')" class="mt-4 w-full py-2.5 rounded-full bg-zinc-900 text-white text-sm font-bold group-hover:bg-primary transition flex items-center justify-center gap-2">اطلب الخدمة <i class="ri-arrow-left-line"></i></button>
+      </div>
+
+      <div class="group bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-800 rounded-[24px] p-5 card-hover flex flex-col reveal text-white relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-primary/30 rounded-full blur-2xl"></div>
+        <div class="w-12 h-12 rounded-2xl bg-white text-zinc-900 flex items-center justify-center text-xl mb-4 relative"><i class="ri-code-s-slash-line"></i></div>
+        <h3 class="font-black leading-tight relative">خدمات برمجية مخصصة</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed mt-2 flex-1 relative">حلول AI، أتمتة، تكاملات، وأنظمة خاصة حسب طلبك.</p>
+        <div class="flex flex-wrap gap-1.5 mt-4 relative">
+          <span class="text-[10px] bg-white/10 px-2 py-1 rounded-full">AI Agents</span>
+          <span class="text-[10px] bg-white/10 px-2 py-1 rounded-full">Automation</span>
+          <span class="text-[10px] bg-white/10 px-2 py-1 rounded-full">API</span>
+        </div>
+        <button onclick="openOrder('custom')" class="mt-4 w-full py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-red-600 transition flex items-center justify-center gap-2 relative">اطلب استشارة <i class="ri-arrow-left-line"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Templates Visual -->
+<section id="templates" class="py-16 sm:py-20 bg-zinc-50 border-y border-zinc-100">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-8">
+      <div class="inline-flex items-center gap-2 bg-white border border-zinc-200 rounded-full px-4 py-1.5 text-xs font-bold shadow-sm"><i class="ri-layout-line text-primary"></i> القوالب المرئية</div>
+      <h2 class="text-[28px] sm:text-[36px] font-black mt-4 leading-tight">لا تكتب وصفًا فقط — <span class="text-primary">اختر ما تراه</span></h2>
+      <p class="text-zinc-600 mt-3 leading-7">اختار النمط الذي يعجبك بصريًا وسننفذ مشروعك بنفس الجودة. كل قالب قابل للتخصيص بالكامل.</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 mb-8" id="templateFilters">
+      <button data-filter="all" class="filter-btn active px-5 py-2 rounded-full bg-zinc-900 text-white text-sm font-bold">الكل</button>
+      <button data-filter="website" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold hover:border-zinc-300">مواقع</button>
+      <button data-filter="app" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold">تطبيقات</button>
+      <button data-filter="brand" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold">هويات</button>
+      <button data-filter="dashboard" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold">Dashboards</button>
+      <button data-filter="presentation" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold">عروض</button>
+      <button data-filter="video" class="filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold">فيديو</button>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" id="templateGrid">
+      <!-- Templates will be injected by JS -->
+    </div>
+
+    <div class="text-center mt-8">
+      <button onclick="openOrder()" class="inline-flex items-center gap-2 bg-white border border-zinc-200 px-6 py-3 rounded-full font-bold hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition">تصفح كل القوالب (120+) <i class="ri-arrow-left-line"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- How we work -->
+<section id="process" class="py-16 sm:py-20 bg-white">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div class="lg:sticky lg:top-24">
+        <div class="inline-flex items-center gap-2 text-primary font-black text-xs tracking-[0.2em] mb-3"><span class="w-8 h-px bg-primary"></span> كيف نعمل</div>
+        <h2 class="text-[32px] sm:text-[40px] font-black leading-[0.95]">رحلة واضحة<br>من الفكرة إلى <span class="text-primary">الإطلاق</span></h2>
+        <p class="text-zinc-600 leading-7 mt-4 max-w-[480px]">عملية احترافية شفافة مع متابعة لحظية، تسليم مرحلي، وضمان رضا كامل. كل خطوة موثقة في حسابك.</p>
+        <div class="hidden lg:block mt-8 bg-zinc-50 rounded-2xl p-5 border border-zinc-100">
+          <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center"><i class="ri-time-line"></i></div><div class="font-bold text-sm">متوسط التسليم</div><div class="ms-auto font-black text-primary">7-14 يوم</div></div>
+          <div class="h-2 bg-zinc-200 rounded-full overflow-hidden flex"><div class="flex-1 bg-primary"></div><div class="flex-1 bg-zinc-900"></div><div class="flex-1 bg-amber-500"></div><div class="flex-1 bg-violet-600"></div></div>
+          <div class="flex justify-between text-[10px] font-bold text-zinc-500 mt-2"><span>تحليل</span><span>تصميم</span><span>تطوير</span><span>إطلاق</span></div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="relative flex gap-4 sm:gap-6 reveal">
+          <div class="flex flex-col items-center"><div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center font-black">01</div><div class="flex-1 w-px bg-zinc-200 my-2"></div></div>
+          <div class="flex-1 bg-white border border-zinc-200 rounded-3xl p-6 sm:p-7">
+            <div class="flex items-start justify-between gap-4"><h3 class="font-black text-lg">الاستكشاف والتحليل</h3><span class="text-xs bg-zinc-100 px-3 py-1 rounded-full font-bold whitespace-nowrap">يوم 1-2</span></div>
+            <p class="text-sm text-zinc-600 leading-6 mt-2">نفهم أهدافك، جمهورك، ومنافسيك. نحدد النطاق، الميزانية، والجدول الزمني بدقة.</p>
+            <div class="flex flex-wrap gap-2 mt-4"><span class="text-xs bg-zinc-50 border border-zinc-200 px-3 py-1.5 rounded-full font-medium flex items-center gap-1"><i class="ri-file-list-line"></i> استبيان ذكي</span><span class="text-xs bg-zinc-50 border border-zinc-200 px-3 py-1.5 rounded-full font-medium flex items-center gap-1"><i class="ri-customer-service-line"></i> مكالمة اكتشاف</span></div>
+          </div>
+        </div>
+        <div class="relative flex gap-4 sm:gap-6 reveal">
+          <div class="flex flex-col items-center"><div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center font-black">02</div><div class="flex-1 w-px bg-zinc-200 my-2"></div></div>
+          <div class="flex-1 bg-white border border-zinc-200 rounded-3xl p-6 sm:p-7">
+            <div class="flex items-start justify-between gap-4"><h3 class="font-black text-lg">التصميم والنمذجة</h3><span class="text-xs bg-zinc-900 text-white px-3 py-1 rounded-full font-bold">يوم 3-6</span></div>
+            <p class="text-sm text-zinc-600 leading-6 mt-2">نصمم النماذج الأولية ونعرضها عليك للاعتماد. تختار من قوالبنا وتعدل مباشرة.</p>
+            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=600&h=220&fit=crop" class="w-full h-32 object-cover rounded-2xl mt-4">
+          </div>
+        </div>
+        <div class="relative flex gap-4 sm:gap-6 reveal">
+          <div class="flex flex-col items-center"><div class="w-12 h-12 rounded-2xl bg-white border-2 border-zinc-900 text-zinc-900 flex items-center justify-center font-black">03</div><div class="flex-1 w-px bg-zinc-200 my-2"></div></div>
+          <div class="flex-1 bg-white border border-zinc-200 rounded-3xl p-6 sm:p-7">
+            <h3 class="font-black text-lg">التطوير والتنفيذ</h3>
+            <p class="text-sm text-zinc-600 leading-6 mt-2">نحول التصميم إلى منتج حي. تحديثات يومية، معاينات مباشرة، وتعديلات فورية.</p>
+            <div class="grid grid-cols-3 gap-3 mt-4 text-center">
+              <div class="bg-zinc-50 rounded-2xl p-3 border border-zinc-100"><div class="font-black text-primary">Figma</div><div class="text-xs text-zinc-500">تصميم</div></div>
+              <div class="bg-zinc-50 rounded-2xl p-3 border border-zinc-100"><div class="font-black text-zinc-900">Code</div><div class="text-xs text-zinc-500">برمجة</div></div>
+              <div class="bg-zinc-50 rounded-2xl p-3 border border-zinc-100"><div class="font-black text-emerald-600">QA</div><div class="text-xs text-zinc-500">اختبار</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="relative flex gap-4 sm:gap-6 reveal">
+          <div class="flex flex-col items-center"><div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center font-black">04</div></div>
+          <div class="flex-1 bg-zinc-900 text-white rounded-3xl p-6 sm:p-7 relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/30 rounded-full blur-3xl"></div>
+            <h3 class="font-black text-lg relative">الإطلاق والدعم</h3>
+            <p class="text-sm text-zinc-300 leading-6 mt-2 relative">نطلق مشروعك، ندرب فريقك، ونبقى معك بدعم فني وتحديثات مستمرة.</p>
+            <div class="flex gap-2 mt-4 relative"><span class="bg-white text-zinc-900 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"><i class="ri-rocket-line"></i> إطلاق</span><span class="bg-white/10 px-3 py-1.5 rounded-full text-xs font-bold">دعم 30 يوم مجاني</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section class="py-16 sm:py-20 bg-zinc-900 text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 1px 1px, white 1px, transparent 0);background-size:32px 32px"></div>
+  <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]"></div>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+      <div>
+        <div class="inline-flex items-center gap-2 text-primary font-black text-xs tracking-[0.2em] mb-3"><span class="w-8 h-px bg-primary"></span> لماذا ASG</div>
+        <h2 class="text-[28px] sm:text-[36px] font-black leading-tight">لسنا مجرد منفذين<br>نحن <span class="text-primary">شركاء نمو</span></h2>
+      </div>
+      <p class="text-zinc-400 max-w-[480px] leading-7">جودة Premium، تسليم سريع، تواصل شفاف، وأسعار تنافسية — مع ضمان استرداد إذا لم تكن راضيًا.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      <div class="bg-white/[0.06] backdrop-blur border border-white/10 rounded-[24px] p-6 reveal">
+        <div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-xl"><i class="ri-flashlight-line"></i></div>
+        <h3 class="font-black mt-4">سرعة تنفيذ</h3>
+        <p class="text-sm text-zinc-400 leading-6 mt-2">نُسلم في نصف وقت السوق بدون التضحية بالجودة بفضل أنظمتنا المؤتمتة.</p>
+      </div>
+      <div class="bg-white/[0.06] backdrop-blur border border-white/10 rounded-[24px] p-6 reveal">
+        <div class="w-12 h-12 rounded-2xl bg-white text-zinc-900 flex items-center justify-center text-xl"><i class="ri-vip-diamond-line"></i></div>
+        <h3 class="font-black mt-4">جودة Premium</h3>
+        <p class="text-sm text-zinc-400 leading-6 mt-2">تصاميم بمستوى شركات عالمية مع مراجعات دقيقة واختبارات جودة.</p>
+      </div>
+      <div class="bg-white/[0.06] backdrop-blur border border-white/10 rounded-[24px] p-6 reveal">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-xl"><i class="ri-customer-service-2-line"></i></div>
+        <h3 class="font-black mt-4">دعم حقيقي</h3>
+        <p class="text-sm text-zinc-400 leading-6 mt-2">مدير مشروع مخصص، رد خلال ساعتين، وتحديثات يومية على حسابك.</p>
+      </div>
+      <div class="bg-white/[0.06] backdrop-blur border border-white/10 rounded-[24px] p-6 reveal">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center text-xl"><i class="ri-palette-line"></i></div>
+        <h3 class="font-black mt-4">تخصيص كامل</h3>
+        <p class="text-sm text-zinc-400 leading-6 mt-2">كل قالب قابل للتعديل 100% — ألوان، خطوط، محتوى، ووظائف.</p>
+      </div>
+      <div class="bg-white/[0.06] backdrop-blur border border-white/10 rounded-[24px] p-6 reveal">
+        <div class="w-12 h-12 rounded-2xl bg-violet-600 flex items-center justify-center text-xl"><i class="ri-shield-check-line"></i></div>
+        <h3 class="font-black mt-4">ضمان الرضا</h3>
+        <p class="text-sm text-zinc-400 leading-6 mt-2">تعديلات مجانية حتى الرضا التام وضمان استرداد 14 يوم.</p>
+      </div>
+      <div class="bg-primary rounded-[24px] p-6 reveal relative overflow-hidden">
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+        <div class="w-12 h-12 rounded-2xl bg-white text-primary flex items-center justify-center text-xl"><i class="ri-robot-line"></i></div>
+        <h3 class="font-black mt-4">جاهز للمستقبل</h3>
+        <p class="text-sm text-white/90 leading-6 mt-2">منصة قابلة للتوسع إلى Automation و AI Agents لإدارة أعمالك.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About & Stats -->
+<section id="about" class="py-16 sm:py-20 bg-white">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" class="w-full h-[420px] object-cover rounded-[32px]">
+        <div class="absolute -bottom-6 -left-2 sm:left-6 bg-zinc-900 text-white rounded-3xl p-5 sm:p-6 shadow-2xl flex items-center gap-4 max-w-[320px]">
+          <div class="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center text-2xl flex-shrink-0"><i class="ri-award-line"></i></div>
+          <div><div class="font-black">شركة سعودية بمعايير عالمية</div><div class="text-xs text-zinc-400 mt-1">نخدم عملاء في 12 دولة • منذ 2019</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="inline-flex items-center gap-2 text-primary font-black text-xs tracking-[0.2em] mb-3"><span class="w-8 h-px bg-primary"></span> من نحن</div>
+        <h2 class="text-[28px] sm:text-[36px] font-black leading-tight">نصمم التقنية<br>التي <span class="text-primary">تصنع الفرق</span></h2>
+        <p class="text-zinc-600 leading-7 mt-4">ASG ليست مجرد شركة خدمات. نحن استوديو تقني وإبداعي متكامل يجمع بين التصميم، البرمجة، والمحتوى في مكان واحد. هدفنا: تحويل أفكار رواد الأعمال والشركات إلى منتجات رقمية تنافس عالميًا.</p>
+        <div class="grid grid-cols-3 gap-4 mt-8">
+          <div class="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center"><div class="font-black text-2xl text-primary">500+</div><div class="text-xs font-bold text-zinc-600">مشروع</div></div>
+          <div class="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center"><div class="font-black text-2xl text-zinc-900">12</div><div class="text-xs font-bold text-zinc-600">دولة</div></div>
+          <div class="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center"><div class="font-black text-2xl text-zinc-900">35+</div><div class="text-xs font-bold text-zinc-600">خبير</div></div>
+        </div>
+        <div class="flex gap-3 mt-8">
+          <a href="#contact" class="flex-1 sm:flex-none inline-flex justify-center items-center gap-2 bg-zinc-900 text-white px-7 py-3 rounded-full font-bold hover:bg-black transition">تواصل معنا</a>
+          <button onclick="openOrder()" class="flex-1 sm:flex-none inline-flex justify-center items-center gap-2 bg-white border border-zinc-200 px-7 py-3 rounded-full font-bold hover:border-zinc-300 transition">ابدأ الآن</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-16 sm:py-20 bg-zinc-50 border-y border-zinc-100">
+  <div class="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 bg-white border border-zinc-200 rounded-full px-4 py-1.5 text-xs font-bold shadow-sm"><i class="ri-question-line text-primary"></i> الأسئلة الشائعة</div>
+      <h2 class="text-[28px] sm:text-[36px] font-black mt-4">كل ما تريد معرفته</h2>
+      <p class="text-zinc-600 mt-2">إجابات سريعة لأكثر الأسئلة تكرارًا</p>
+    </div>
+    <div class="space-y-3" id="faqList">
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">كم يستغرق تنفيذ الموقع أو التطبيق؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0 transition"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">المواقع التعريفية 5-7 أيام، المتاجر 10-14 يوم، التطبيقات 3-6 أسابيع حسب التعقيد. نلتزم بجدول زمني واضح مع تحديثات يومية في حسابك.</div>
+      </div>
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">هل يمكنني اختيار قالب ثم تعديله بالكامل؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">نعم، كل القوالب قابلة للتخصيص 100% — الألوان، الخطوط، الصور، المحتوى، والأقسام. نعتبر القالب نقطة انطلاق فقط.</div>
+      </div>
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">ما طرق الدفع وهل يوجد تقسيط؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">نقبل مدى، STC Pay، تحويل بنكي، وبطاقات. الدفع عادة 50% مقدم و50% عند التسليم. للمشاريع الكبيرة نوفر تقسيط حتى 3 دفعات.</div>
+      </div>
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">هل أحصل على لوحة تحكم وملفات المشروع؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">بالتأكيد. تسلم كل الملفات المصدرية، لوحة تحكم، حسابات، ودليل استخدام. المشروع ملكك بالكامل بدون قيود.</div>
+      </div>
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">هل تقدمون دعمًا بعد التسليم؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">نعم، دعم فني مجاني لمدة 30 يوم، وضمان إصلاح أي خلل تقني لمدة 90 يوم. كما نوفر باقات صيانة وتطوير شهرية اختيارية.</div>
+      </div>
+      <div class="faq-item bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between p-5 text-start">
+          <span class="font-bold">كيف أتابع حالة طلبي؟</span>
+          <span class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0"><i class="ri-add-line"></i></span>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 text-sm text-zinc-600 leading-7">بعد إنشاء حسابك، تجد كل طلباتك في لوحة التحكم مع حالتها، الرسائل، الملفات، والمعاينات المباشرة. إشعارات فورية على الإيميل والواتساب.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA -->
+<section id="contact" class="py-16 sm:py-20 bg-white">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-2">
+        <div class="inline-flex items-center gap-2 text-primary font-black text-xs tracking-[0.2em] mb-3"><span class="w-8 h-px bg-primary"></span> تواصل معنا</div>
+        <h2 class="text-[28px] sm:text-[36px] font-black leading-tight">جاهز لنبدأ؟<br>دعنا نتحدث</h2>
+        <p class="text-zinc-600 leading-7 mt-3">فريق ASG يرد خلال ساعتين في أوقات العمل. اختر طريقة التواصل الأنسب لك.</p>
+        <div class="space-y-3 mt-8">
+          <a href="tel:+966500000000" class="flex items-center gap-4 p-4 rounded-2xl border border-zinc-200 hover:border-primary/30 hover:bg-primary/5 transition group">
+            <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center group-hover:bg-primary transition"><i class="ri-phone-line text-xl"></i></div>
+            <div><div class="text-xs text-zinc-500 font-bold">اتصل بنا</div><div class="font-black">+966 50 000 0000</div></div>
+            <i class="ri-arrow-left-s-line ms-auto text-zinc-400"></i>
+          </a>
+          <a href="https://wa.me/966500000000" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl border border-zinc-200 hover:border-emerald-200 hover:bg-emerald-50 transition group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center"><i class="ri-whatsapp-line text-xl"></i></div>
+            <div><div class="text-xs text-zinc-500 font-bold">واتساب مباشر</div><div class="font-black">محادثة فورية</div></div>
+            <span class="ms-auto bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">متصل الآن</span>
+          </a>
+          <div class="flex items-center gap-4 p-4 rounded-2xl border border-zinc-200">
+            <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center"><i class="ri-mail-line text-xl"></i></div>
+            <div><div class="text-xs text-zinc-500 font-bold">البريد الإلكتروني</div><div class="font-bold text-sm">hello@asg.sa</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-3">
+        <form id="contactForm" class="bg-zinc-50 border border-zinc-200 rounded-[32px] p-6 sm:p-8">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="text-xs font-bold text-zinc-700">الاسم الكامل</label><input required type="text" placeholder="محمد أحمد" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            <div><label class="text-xs font-bold text-zinc-700">رقم الجوال / واتساب</label><input required type="tel" placeholder="+966 5x xxx xxxx" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            <div><label class="text-xs font-bold text-zinc-700">البريد الإلكتروني</label><input required type="email" placeholder="name@company.com" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            <div><label class="text-xs font-bold text-zinc-700">الخدمة المطلوبة</label>
+              <select class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">
+                <option>إنشاء موقع إلكتروني</option><option>إنشاء تطبيق</option><option>هوية بصرية</option><option>فيديو / موشن</option><option>خدمة أخرى</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2"><label class="text-xs font-bold text-zinc-700">نبذة عن المشروع</label><textarea rows="4" placeholder="احكِ لنا عن فكرتك، أهدافك، وميزانيتك التقريبية..." class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm resize-none"></textarea></div>
+          </div>
+          <button type="submit" class="w-full mt-6 bg-primary text-white py-3.5 rounded-full font-black hover:bg-primaryDark transition flex items-center justify-center gap-2">إرسال الرسالة <i class="ri-send-plane-line"></i></button>
+          <p class="text-center text-xs text-zinc-500 mt-3">بالضغط ترسل، أنت توافق على سياسة الخصوصية • رد خلال ساعتين</p>
+        </form>
+      </div>
+    </div>
+    <!-- Final CTA banner -->
+    <div class="mt-12 bg-zinc-900 rounded-[32px] p-6 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden">
+      <div class="absolute -top-20 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-[80px]"></div>
+      <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-violet-600/10 rounded-full blur-[80px]"></div>
+      <div class="relative">
+        <h3 class="text-white text-[24px] sm:text-[32px] font-black leading-tight">حوّل فكرتك إلى واقع<br>خلال أيام، لا شهور.</h3>
+        <p class="text-zinc-400 mt-2">ابدأ الآن — ستحصل على معاينة أولية خلال 48 ساعة.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 relative w-full lg:w-auto">
+        <button onclick="openOrder()" class="bg-primary text-white px-8 py-4 rounded-full font-black hover:bg-red-600 transition flex items-center justify-center gap-2">ابدأ مشروعك مجانًا <i class="ri-sparkling-2-line"></i></button>
+        <button onclick="openAuth('signup')" class="bg-white text-zinc-900 px-8 py-4 rounded-full font-black hover:bg-zinc-100 transition">إنشاء حساب</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-zinc-950 text-zinc-400 border-t border-white/5">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 text-white"><div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center font-black">ASG</div><div><div class="font-black leading-none">ASG</div><div class="text-xs tracking-[0.2em]">TECH & CREATIVE</div></div></div>
+        <p class="text-sm leading-6 mt-4 max-w-[360px]">استوديو تقني وإبداعي سعودي يبني مواقع، تطبيقات، هويات، ومحتوى بجودة عالمية. شريكك من الفكرة إلى النمو.</p>
+        <div class="flex gap-2 mt-6">
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="ri-twitter-x-line"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="ri-linkedin-line"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="ri-behance-line"></i></a>
+        </div>
+      </div>
+      <div><div class="text-white font-black mb-4">الخدمات</div><ul class="space-y-2.5 text-sm"><li><a href="#services" class="hover:text-white transition">مواقع إلكترونية</a></li><li><a href="#services" class="hover:text-white transition">تطبيقات</a></li><li><a href="#services" class="hover:text-white transition">هويات وشعارات</a></li><li><a href="#services" class="hover:text-white transition">فيديو وموشن</a></li><li><a href="#services" class="hover:text-white transition">Dashboards</a></li></ul></div>
+      <div><div class="text-white font-black mb-4">الشركة</div><ul class="space-y-2.5 text-sm"><li><a href="#about" class="hover:text-white transition">من نحن</a></li><li><a href="#process" class="hover:text-white transition">كيف نعمل</a></li><li><a href="#" class="hover:text-white transition">أعمالنا</a></li><li><a href="#" class="hover:text-white transition">وظائف</a></li><li><a href="#contact" class="hover:text-white transition">تواصل</a></li></ul></div>
+      <div><div class="text-white font-black mb-4">الدعم</div><ul class="space-y-2.5 text-sm"><li><a href="#faq" class="hover:text-white transition">الأسئلة الشائعة</a></li><li><a href="#" class="hover:text-white transition">سياسة الخصوصية</a></li><li><a href="#" class="hover:text-white transition">الشروط والأحكام</a></li><li><a href="#" class="hover:text-white transition">المدونة</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-10 pt-8 border-t border-white/10 text-xs">
+      <div>© 2025 ASG Tech & Creative. جميع الحقوق محفوظة • سجل تجاري 1234567890</div>
+      <div class="flex items-center gap-2">صُنع بـ <i class="ri-heart-3-fill text-primary"></i> في الرياض • نخدم العالم</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Auth Modal -->
+<div id="authModal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-zinc-900/70 backdrop-blur-sm" onclick="closeAuth()"></div>
+  <div class="relative min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-[32px] w-full max-w-[480px] shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div class="p-6 sm:p-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black">ASG</div><div class="font-black">ASG</div></div>
+          <button onclick="closeAuth()" class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center hover:bg-zinc-200"><i class="ri-close-line text-xl"></i></button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 p-1 bg-zinc-100 rounded-full mt-6">
+          <button id="tabLogin" onclick="switchAuth('login')" class="py-2.5 rounded-full bg-zinc-900 text-white font-bold text-sm transition">تسجيل الدخول</button>
+          <button id="tabSignup" onclick="switchAuth('signup')" class="py-2.5 rounded-full text-zinc-600 font-bold text-sm transition">إنشاء حساب</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="mt-6 space-y-4">
+          <div><label class="text-xs font-bold">البريد الإلكتروني</label><input id="loginEmail" required type="email" placeholder="name@company.com" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+          <div><label class="text-xs font-bold">كلمة المرور</label><div class="relative mt-1.5"><input id="loginPassword" required type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm pe-10"><button type="button" onclick="togglePass('loginPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"><i class="ri-eye-line"></i></button></div></div>
+          <div class="flex items-center justify-between text-xs"><label class="flex items-center gap-2 font-medium"><input type="checkbox" class="rounded"> تذكرني</label><a href="#" class="text-primary font-bold">نسيت كلمة المرور؟</a></div>
+          <button type="submit" class="w-full bg-primary text-white py-3.5 rounded-full font-black hover:bg-primaryDark transition">دخول إلى حسابي</button>
+          <div class="relative flex items-center justify-center my-2"><div class="absolute inset-0 flex items-center"><div class="w-full h-px bg-zinc-200"></div></div><span class="relative bg-white px-3 text-xs text-zinc-500">أو</span></div>
+          <button type="button" class="w-full border border-zinc-200 py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-zinc-50"><img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5"> المتابعة بـ Google</button>
+          <p class="text-center text-xs text-zinc-500">ليس لديك حساب؟ <button type="button" onclick="switchAuth('signup')" class="text-primary font-bold">أنشئ حسابًا الآن</button></p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signupForm" class="mt-6 space-y-4 hidden">
+          <div><label class="text-xs font-bold">الاسم الكامل</label><input id="signupName" required type="text" placeholder="محمد أحمد" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="text-xs font-bold">البريد الإلكتروني</label><input id="signupEmail" required type="email" placeholder="name@company.com" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            <div><label class="text-xs font-bold">الجوال / واتساب</label><input id="signupPhone" required type="tel" placeholder="+966 5x xxx xxxx" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+          </div>
+          <div><label class="text-xs font-bold">كلمة المرور</label><div class="relative mt-1.5"><input id="signupPassword" required type="password" placeholder="8 أحرف على الأقل" class="w-full px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm pe-10"><button type="button" onclick="togglePass('signupPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"><i class="ri-eye-line"></i></button></div></div>
+          <div><label class="text-xs font-bold">تأكيد كلمة المرور</label><input id="signupConfirm" required type="password" placeholder="أعد كتابة كلمة المرور" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+          <label class="flex items-start gap-2 text-xs leading-5"><input required type="checkbox" class="mt-1 rounded"> أوافق على <a href="#" class="text-primary font-bold">الشروط والأحكام</a> و <a href="#" class="text-primary font-bold">سياسة الخصوصية</a></label>
+          <button type="submit" class="w-full bg-zinc-900 text-white py-3.5 rounded-full font-black hover:bg-black transition">إنشاء حسابي</button>
+          <p class="text-center text-xs text-zinc-500">لديك حساب؟ <button type="button" onclick="switchAuth('login')" class="text-primary font-bold">سجل دخولك</button></p>
+        </form>
+      </div>
+      <div class="bg-zinc-50 px-6 sm:px-8 py-4 flex items-center justify-center gap-2 text-xs text-zinc-500 border-t border-zinc-100"><i class="ri-shield-check-line text-emerald-600"></i> حسابك محمي بتشفير AES-256 • قابل للتوسع إلى لوحة متابعة الطلبات</div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Workflow Modal -->
+<div id="orderModal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-zinc-900/70 backdrop-blur-sm" onclick="closeOrder()"></div>
+  <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-[28px] sm:rounded-[32px] w-full max-w-[760px] shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
+      <!-- Progress Header -->
+      <div class="px-6 sm:px-8 pt-6 sm:pt-7 pb-4 border-b border-zinc-100 bg-white sticky top-0 z-10">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3"><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white font-black text-sm">ASG</div><div><div class="font-black text-sm leading-none">ابدأ مشروعك</div><div class="text-xs text-zinc-500">Workflow ذكي متعدد الخطوات</div></div></div>
+          <button onclick="closeOrder()" class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center hover:bg-zinc-200"><i class="ri-close-line text-xl"></i></button>
+        </div>
+        <div class="flex items-center gap-2 mt-6">
+          <div class="flex items-center gap-2">
+            <div id="stepDot1" class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-black">1</div>
+            <span id="stepLabel1" class="hidden sm:block text-xs font-bold">الخدمة</span>
+          </div>
+          <div id="line12" class="progress-line"></div>
+          <div class="flex items-center gap-2">
+            <div id="stepDot2" class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-500 flex items-center justify-center text-sm font-black">2</div>
+            <span id="stepLabel2" class="hidden sm:block text-xs font-bold text-zinc-400">النمط والقالب</span>
+          </div>
+          <div id="line23" class="progress-line"></div>
+          <div class="flex items-center gap-2">
+            <div id="stepDot3" class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-500 flex items-center justify-center text-sm font-black">3</div>
+            <span id="stepLabel3" class="hidden sm:block text-xs font-bold text-zinc-400">التفاصيل</span>
+          </div>
+          <div id="line34" class="progress-line"></div>
+          <div class="flex items-center gap-2">
+            <div id="stepDot4" class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-500 flex items-center justify-center text-sm font-black">4</div>
+            <span id="stepLabel4" class="hidden sm:block text-xs font-bold text-zinc-400">التأكيد</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto">
+        <!-- STEP 1 -->
+        <div id="orderStep1" class="p-6 sm:p-8">
+          <h3 class="text-xl font-black">اختر الخدمة التي تريدها</h3>
+          <p class="text-sm text-zinc-500 mt-1">يمكنك تغيير اختيارك لاحقًا — الأسئلة ستتغير تلقائيًا حسب الخدمة.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-6" id="servicePicker">
+            <!-- injected -->
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="orderStep2" class="p-6 sm:p-8 hidden">
+          <h3 class="text-xl font-black">خصّص طلبك</h3>
+          <p class="text-sm text-zinc-500 mt-1" id="dynamicDesc">أجب بسرعة ثم اختر قالبًا بصريًا يعجبك.</p>
+          <div id="dynamicQuestions" class="space-y-4 mt-6 bg-zinc-50 border border-zinc-200 rounded-2xl p-5">
+            <!-- injected -->
+          </div>
+          <div class="mt-6">
+            <div class="flex items-center justify-between">
+              <h4 class="font-black text-sm">اختر قالبًا مرئيًا (اختياري لكنه يسرّع التنفيذ)</h4>
+              <span class="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-bold">مُستحسن</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3" id="orderTemplates">
+              <!-- injected -->
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div id="orderStep3" class="p-6 sm:p-8 hidden">
+          <h3 class="text-xl font-black">تفاصيل المشروع</h3>
+          <p class="text-sm text-zinc-500 mt-1">كلما كانت التفاصيل أوضح، كانت النتيجة أدق وأسرع.</p>
+          <div class="space-y-4 mt-6">
+            <div><label class="text-xs font-bold">اسم المشروع</label><input id="projName" type="text" placeholder="مثال: متجر إلكتروني للعباءات" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            <div><label class="text-xs font-bold">وصف المشروع وأهدافه</label><textarea id="projDesc" rows="4" placeholder="ما الذي تريد تحقيقه؟ من هو جمهورك؟ أي مراجع أو مواقع تعجبك؟" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm resize-none"></textarea></div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="text-xs font-bold">الميزانية التقريبية</label>
+                <select id="projBudget" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">
+                  <option>2,000 - 5,000 ر.س</option><option selected>5,000 - 10,000 ر.س</option><option>10,000 - 25,000 ر.س</option><option>25,000+ ر.س</option><option>غير متأكد - أحتاج استشارة</option>
+                </select>
+              </div>
+              <div><label class="text-xs font-bold">موعد التسليم المطلوب</label><input id="projDate" type="date" class="w-full mt-1.5 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm"></div>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
+              <i class="ri-lightbulb-line text-amber-600 text-xl flex-shrink-0 mt-0.5"></i>
+              <div class="text-xs leading-6 text-amber-900"><span class="font-black">تلميح:</span> إرفاق روابط لمواقع أو تصاميم تعجبك يختصر 50% من وقت التصميم. يمكنك إضافتها في الوصف.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div id="orderStep4" class="p-6 sm:p-8 hidden">
+          <h3 class="text-xl font-black">راجع طلبك وأكّده</h3>
+          <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-5 mt-4 space-y-3 text-sm" id="orderSummary">
+            <!-- injected -->
+          </div>
+          <div id="orderAuthBox" class="mt-4 bg-white border border-zinc-200 rounded-2xl p-5">
+            <div class="font-bold text-sm flex items-center gap-2"><i class="ri-user-3-line text-primary"></i> بيانات التواصل</div>
+            <div id="orderAuthLogged" class="hidden mt-3 flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+              <img src="https://i.pravatar.cc/100?img=12" class="w-10 h-10 rounded-full">
+              <div><div class="font-bold text-sm" id="summaryUserName">أحمد محمد</div><div class="text-xs text-zinc-500" id="summaryUserEmail">ahmed@company.com</div></div>
+              <span class="ms-auto text-xs bg-emerald-600 text-white px-3 py-1 rounded-full font-bold">مسجل دخول</span>
+            </div>
+            <div id="orderAuthGuest" class="grid sm:grid-cols-2 gap-3 mt-3">
+              <input id="orderName" type="text" placeholder="الاسم الكامل" class="px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">
+              <input id="orderPhone" type="tel" placeholder="واتساب / جوال" class="px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">
+              <input id="orderEmail" type="email" placeholder="البريد الإلكتروني" class="sm:col-span-2 px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">
+            </div>
+          </div>
+          <label class="flex items-start gap-2 text-xs leading-5 mt-4"><input id="orderAgree" type="checkbox" class="mt-1 rounded"> أوافق على الشروط وأؤكد أن المعلومات صحيحة. سيتم إنشاء حساب متابعة تلقائيًا لمتابعة حالة الطلب.</label>
+        </div>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="p-4 sm:p-6 border-t border-zinc-100 bg-zinc-50 flex items-center justify-between gap-3 sticky bottom-0">
+        <button id="orderPrev" onclick="orderPrev()" class="px-6 py-3 rounded-full border border-zinc-200 bg-white font-bold hover:bg-zinc-100 transition hidden">رجوع</button>
+        <div class="text-xs text-zinc-500 hidden sm:block">الخطوة <span id="stepCounter">1</span> من 4 • يتم الحفظ تلقائيًا</div>
+        <button id="orderNext" onclick="orderNext()" class="ms-auto bg-primary text-white px-8 py-3 rounded-full font-black hover:bg-primaryDark transition flex items-center gap-2">متابعة <i class="ri-arrow-left-line"></i></button>
+        <button id="orderSubmit" onclick="orderSubmit()" class="ms-auto bg-zinc-900 text-white px-8 py-3 rounded-full font-black hover:bg-black transition hidden items-center gap-2">تأكيد الطلب <i class="ri-check-line"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[120] hidden">
+  <div class="bg-zinc-900 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-3 text-sm font-bold"><i class="ri-check-line bg-emerald-500 w-6 h-6 rounded-full flex items-center justify-center text-white"></i><span id="toastMsg">تم بنجاح</span></div>
+</div>
+
+<script>
+// Data
+const services=[
+  {id:'website', name:'موقع إلكتروني', icon:'ri-global-line', color:'bg-primary'},
+  {id:'app', name:'تطبيق جوال', icon:'ri-smartphone-line', color:'bg-zinc-900'},
+  {id:'presentation', name:'عرض تقديمي', icon:'ri-slideshow-line', color:'bg-amber-500'},
+  {id:'design', name:'صور وتصميمات', icon:'ri-palette-line', color:'bg-violet-600'},
+  {id:'video', name:'فيديو', icon:'ri-movie-2-line', color:'bg-red-500'},
+  {id:'motion', name:'رسوم متحركة', icon:'ri-film-line', color:'bg-emerald-600'},
+  {id:'brand', name:'شعار وهوية', icon:'ri-quill-pen-line', color:'bg-zinc-800'},
+  {id:'dashboard', name:'Dashboard / UI', icon:'ri-dashboard-3-line', color:'bg-blue-600'},
+  {id:'game', name:'لعبة', icon:'ri-gamepad-line', color:'bg-pink-600'},
+  {id:'custom', name:'خدمة مخصصة', icon:'ri-code-s-slash-line', color:'bg-zinc-900'},
+];
+
+const templates=[
+  {id:1, cat:'website', title:'متجر فاخر - Minimal', img:'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop', price:'يبدأ 4,500 ر.س'},
+  {id:2, cat:'website', title:'شركة تقنية - Dark Pro', img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop', price:'يبدأ 3,900 ر.س'},
+  {id:3, cat:'app', title:'تطبيق توصيل - Light', img:'https://images.unsplash.com/photo-1512941937669-90a1b58e7dfb?w=600&h=400&fit=crop', price:'يبدأ 12,000 ر.س'},
+  {id:4, cat:'brand', title:'هوية مطعم - Warm', img:'https://images.unsplash.com/photo-1626785774625-8a0f5b2793d6?w=600&h=400&fit=crop', price:'يبدأ 1,800 ر.س'},
+  {id:5, cat:'dashboard', title:'لوحة مبيعات - Analytics', img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop', price:'يبدأ 6,000 ر.س'},
+  {id:6, cat:'presentation', title:'Pitch Deck - Investor', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop', price:'يبدأ 900 ر.س'},
+  {id:7, cat:'video', title:'إعلان سوشال - Fast Cut', img:'https://images.unsplash.com/photo-1536243287037-7f1444775910?w=600&h=400&fit=crop', price:'يبدأ 1,200 ر.س'},
+  {id:8, cat:'app', title:'تطبيق تعليمي - Playful', img:'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop', price:'يبدأ 14,000 ر.س'},
+];
+
+const dynamicMap={
+  website:[
+    {q:'ما نوع الموقع؟', type:'radio', opts:['شركة / تعريفي','متجر إلكتروني','منصة حجز','منصة تعليمية','مدونة / مجلة','مخصص']},
+    {q:'كم عدد الصفحات تقريبًا؟', type:'select', opts:['1-5 صفحات','6-10 صفحات','11-20 صفحة','20+ صفحة']},
+    {q:'ميزات إضافية (اختر ما يناسبك)', type:'check', opts:['دفع إلكتروني','حجز ومواعيد','متعدد اللغات','لوحة تحكم','تكامل واتساب']},
+  ],
+  app:[
+    {q:'المنصة المطلوبة', type:'radio', opts:['iOS','Android','الاثنين معًا','تطبيق ويب PWA']},
+    {q:'نوع التطبيق', type:'select', opts:['متجر','توصيل','تعليمي','اجتماعي','خدمي','مخصص']},
+    {q:'هل تحتاج لوحة تحكم؟', type:'radio', opts:['نعم - ويب','نعم - موبايل + ويب','لا']},
+  ],
+  brand:[
+    {q:'نمط الشعار المفضل', type:'radio', opts:['Minimal','3D','Vintage','Handwritten','Geometric']},
+    {q:'مكونات الهوية', type:'check', opts:['شعار','ألوان وخطوط','بطاقات','ورق رسمي','سوشال','دليل هوية']},
+  ],
+  video:[
+    {q:'نوع الفيديو', type:'radio', opts:['إعلاني','سوشال / ريلز','تعليمي','مونتاج حدث','موشن بسيط']},
+    {q:'المدة التقريبية', type:'select', opts:['15 ثانية','30 ثانية','60 ثانية','2-5 دقائق','5+ دقائق']},
+  ],
+  presentation:[
+    {q:'عدد الشرائح', type:'select', opts:['10-15','16-25','26-40','40+']},
+    {q:'الغرض', type:'radio', opts:['Pitch مستثمرين','مبيعات','تعليمي','شركة']},
+  ],
+  dashboard:[
+    {q:'نوع البيانات', type:'radio', opts:['مبيعات','مالية','تشغيلية','تسويقية','مخصصة']},
+    {q:'عدد المستخدمين', type:'select', opts:['1-5','6-20','21-100','100+']},
+  ],
+  default:[
+    {q:'صف لنا ما تريده بإيجاز', type:'text', opts:[]},
+    {q:'هل لديك مراجع أو أمثلة تعجبك؟', type:'text', opts:[]},
+  ]
+};
+
+// State
+let currentUser = JSON.parse(localStorage.getItem('asg_user')||'null');
+let orderState={step:1, service:null, template:null, answers:{}};
+
+// Init
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderServicePicker();
+  renderTemplates('all');
+  renderOrderTemplates();
+  updateAuthUI();
+  initReveal();
+  initFAQ();
+  initFilters();
+  document.getElementById('mobileMenuBtn').addEventListener('click', ()=> document.getElementById('mobileMenu').classList.toggle('hidden'));
+  document.getElementById('contactForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    showToast('تم إرسال رسالتك بنجاح — سنرد خلال ساعتين ✨');
+    e.target.reset();
+  });
+  document.getElementById('loginForm').addEventListener('submit', handleLogin);
+  document.getElementById('signupForm').addEventListener('submit', handleSignup);
+  // header scroll
+  window.addEventListener('scroll', ()=>{
+    const h=document.getElementById('header');
+    if(window.scrollY>10) h.classList.add('shadow-sm');
+    else h.classList.remove('shadow-sm');
+  });
+});
+
+function renderServicePicker(){
+  const c=document.getElementById('servicePicker');
+  c.innerHTML=services.map(s=>`
+    <button onclick="selectService('${s.id}')" data-sid="${s.id}" class="service-opt group text-start bg-white border-2 border-zinc-200 rounded-2xl p-4 hover:border-primary/30 hover:bg-zinc-50 transition flex flex-col gap-3">
+      <div class="w-10 h-10 rounded-xl ${s.color} text-white flex items-center justify-center text-lg"><i class="${s.icon}"></i></div>
+      <div class="font-bold text-sm leading-tight">${s.name}</div>
+      <div class="w-5 h-5 rounded-full border-2 border-zinc-300 group-[.active]:bg-primary group-[.active]:border-primary group-[.active]:text-white flex items-center justify-center ms-auto"><i class="ri-check-line text-xs hidden group-[.active]:block"></i></div>
+    </button>
+  `).join('');
+}
+
+function renderTemplates(filter){
+  const grid=document.getElementById('templateGrid');
+  const list=filter==='all'?templates:templates.filter(t=>t.cat===filter);
+  grid.innerHTML=list.map(t=>`
+    <div class="group relative bg-white border border-zinc-200 rounded-[20px] overflow-hidden cursor-pointer hover:border-zinc-300 transition" onclick="selectTemplateFromGrid(${t.id})">
+      <div class="relative h-44 overflow-hidden">
+        <img src="${t.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-[10px] font-black tracking-widest">${t.cat.toUpperCase()}</div>
+        <div class="template-check flex-col gap-2">
+          <div class="w-12 h-12 rounded-full bg-white text-primary flex items-center justify-center text-xl"><i class="ri-eye-line"></i></div>
+          <span class="text-white font-bold text-sm">معاينة القالب</span>
+        </div>
+      </div>
+      <div class="p-4">
+        <div class="font-bold text-sm">${t.title}</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="text-xs font-bold text-primary">${t.price}</span>
+          <span class="text-xs bg-zinc-900 text-white px-3 py-1 rounded-full font-bold">اختيار</span>
+        </div>
+      </div>
+    </div>
+  `).join('') || `<div class="col-span-full text-center py-10 text-zinc-500">لا توجد قوالب لهذا التصنيف حاليًا</div>`;
+}
+
+function renderOrderTemplates(){
+  const c=document.getElementById('orderTemplates');
+  c.innerHTML=templates.map(t=>`
+    <div onclick="selectOrderTemplate(${t.id})" data-tid="${t.id}" class="order-tpl group relative bg-white border-2 border-zinc-200 rounded-2xl overflow-hidden cursor-pointer hover:border-zinc-300 transition">
+      <img src="${t.img}" class="w-full h-28 object-cover">
+      <div class="absolute inset-0 bg-primary/0 group-[.active]:bg-primary/10 transition"></div>
+      <div class="p-3">
+        <div class="font-bold text-xs leading-tight">${t.title}</div>
+        <div class="text-[11px] text-zinc-500 mt-1">${t.price}</div>
+      </div>
+      <div class="absolute top-2 left-2 w-6 h-6 rounded-full bg-white border-2 border-zinc-300 group-[.active]:bg-primary group-[.active]:border-primary group-[.active]:text-white flex items-center justify-center"><i class="ri-check-line text-xs hidden group-[.active]:block"></i></div>
+    </div>
+  `).join('');
+}
+
+function initFilters(){
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.filter-btn').forEach(x=>{x.className='filter-btn px-5 py-2 rounded-full bg-white border border-zinc-200 text-sm font-bold hover:border-zinc-300';});
+      b.className='filter-btn active px-5 py-2 rounded-full bg-zinc-900 text-white text-sm font-bold';
+      renderTemplates(b.dataset.filter);
+    });
+  });
+}
+
+function initReveal(){
+  const obs=new IntersectionObserver(ents=>{
+    ents.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('active'); });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+function initFAQ(){
+  document.querySelectorAll('.faq-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item=btn.closest('.faq-item');
+      const ans=item.querySelector('.faq-answer');
+      const icon=btn.querySelector('i');
+      const isOpen=!ans.classList.contains('hidden');
+      document.querySelectorAll('.faq-answer').forEach(a=>a.classList.add('hidden'));
+      document.querySelectorAll('.faq-btn i').forEach(i=>{i.className='ri-add-line'; i.parentElement.className='w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0';});
+      if(!isOpen){
+        ans.classList.remove('hidden');
+        icon.className='ri-subtract-line';
+        icon.parentElement.className='w-8 h-8 rounded-full bg-zinc-900 text-white flex items-center justify-center flex-shrink-0';
+      }
+    });
+  });
+}
+
+// Auth
+function openAuth(mode){
+  document.getElementById('authModal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  switchAuth(mode);
+}
+function closeAuth(){
+  document.getElementById('authModal').classList.add('hidden');
+  document.body.style.overflow='';
+}
+function switchAuth(mode){
+  const loginForm=document.getElementById('loginForm');
+  const signupForm=document.getElementById('signupForm');
+  const tL=document.getElementById('tabLogin');
+  const tS=document.getElementById('tabSignup');
+  if(mode==='login'){
+    loginForm.classList.remove('hidden'); signupForm.classList.add('hidden');
+    tL.className='py-2.5 rounded-full bg-zinc-900 text-white font-bold text-sm transition';
+    tS.className='py-2.5 rounded-full text-zinc-600 font-bold text-sm transition';
+  }else{
+    signupForm.classList.remove('hidden'); loginForm.classList.add('hidden');
+    tS.className='py-2.5 rounded-full bg-zinc-900 text-white font-bold text-sm transition';
+    tL.className='py-2.5 rounded-full text-zinc-600 font-bold text-sm transition';
+  }
+}
+function togglePass(id, btn){
+  const inp=document.getElementById(id);
+  const icon=btn.querySelector('i');
+  if(inp.type==='password'){inp.type='text'; icon.className='ri-eye-off-line';}
+  else{inp.type='password'; icon.className='ri-eye-line';}
+}
+function handleLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPassword').value;
+  if(!email||!pass) return showToast('يرجى تعبئة جميع الحقول');
+  // simulate
+  currentUser={name: email.split('@')[0], email, phone:'+966500000000'};
+  localStorage.setItem('asg_user', JSON.stringify(currentUser));
+  updateAuthUI();
+  closeAuth();
+  showToast('أهلاً بعودتك! تم تسجيل الدخول بنجاح 👋');
+}
+function handleSignup(e){
+  e.preventDefault();
+  const name=document.getElementById('signupName').value.trim();
+  const email=document.getElementById('signupEmail').value.trim();
+  const phone=document.getElementById('signupPhone').value.trim();
+  const pass=document.getElementById('signupPassword').value;
+  const confirm=document.getElementById('signupConfirm').value;
+  if(pass!==confirm) return showToast('كلمتا المرور غير متطابقتين');
+  if(pass.length<8) return showToast('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+  currentUser={name,email,phone};
+  localStorage.setItem('asg_user', JSON.stringify(currentUser));
+  updateAuthUI();
+  closeAuth();
+  showToast('تم إنشاء حسابك بنجاح — مرحبًا بك في ASG 🎉');
+}
+function logout(){
+  localStorage.removeItem('asg_user');
+  currentUser=null;
+  updateAuthUI();
+  showToast('تم تسجيل الخروج');
+}
+function updateAuthUI(){
+  const loginBtn=document.getElementById('loginBtn');
+  const userMenu=document.getElementById('userMenu');
+  if(currentUser){
+    loginBtn.classList.add('hidden');
+    userMenu.classList.remove('hidden');
+    userMenu.classList.add('flex');
+    document.getElementById('userNameDisplay').textContent=currentUser.name;
+  }else{
+    loginBtn.classList.remove('hidden');
+    userMenu.classList.add('hidden');
+    userMenu.classList.remove('flex');
+  }
+}
+
+// Order Workflow
+function openOrder(prefill){
+  document.getElementById('orderModal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  orderState.step=1;
+  if(prefill) orderState.service=prefill;
+  renderOrderStep();
+  // highlight
+  setTimeout(()=>{
+    if(prefill) selectService(prefill);
+    syncTemplateFilter();
+  },50);
+}
+function closeOrder(){
+  document.getElementById('orderModal').classList.add('hidden');
+  document.body.style.overflow='';
+}
+function selectService(id){
+  orderState.service=id;
+  document.querySelectorAll('.service-opt').forEach(el=>{
+    if(el.dataset.sid===id) el.classList.add('active','!border-primary','!bg-primary/5');
+    else el.classList.remove('active','!border-primary','!bg-primary/5');
+  });
+  syncTemplateFilter();
+}
+function syncTemplateFilter(){
+  // filter order templates to show relevant first
+  const cats={
+    website:'website', app:'app', brand:'brand', dashboard:'dashboard', presentation:'presentation', video:'video'
+  };
+  const cat=cats[orderState.service];
+  if(cat){
+    const filtered=templates.filter(t=>t.cat===cat);
+    const rest=templates.filter(t=>t.cat!==cat);
+    const ordered=[...filtered, ...rest];
+    const c=document.getElementById('orderTemplates');
+    c.innerHTML=ordered.map(t=>`
+      <div onclick="selectOrderTemplate(${t.id})" data-tid="${t.id}" class="order-tpl group relative bg-white border-2 border-zinc-200 rounded-2xl overflow-hidden cursor-pointer hover:border-zinc-300 transition ${orderState.template===t.id?'active !border-primary':''}">
+        <img src="${t.img}" class="w-full h-28 object-cover">
+        <div class="p-3"><div class="font-bold text-xs leading-tight">${t.title}</div><div class="text-[11px] text-zinc-500 mt-1">${t.price}</div></div>
+        <div class="absolute top-2 left-2 w-6 h-6 rounded-full bg-white border-2 border-zinc-300 group-[.active]:bg-primary group-[.active]:border-primary group-[.active]:text-white flex items-center justify-center"><i class="ri-check-line text-xs hidden group-[.active]:block"></i></div>
+      </div>
+    `).join('');
+  }
+}
+function selectOrderTemplate(id){
+  orderState.template=id;
+  document.querySelectorAll('.order-tpl').forEach(el=>{
+    if(parseInt(el.dataset.tid)===id) el.classList.add('active','!border-primary');
+    else el.classList.remove('active','!border-primary');
+  });
+}
+function selectTemplateFromGrid(id){
+  openOrder();
+  // after open, select template
+  setTimeout(()=>{ selectOrderTemplate(id); orderState.step=2; renderOrderStep(); syncTemplateFilter(); selectOrderTemplate(id); }, 200);
+  const tpl=templates.find(t=>t.id===id);
+  if(tpl){
+    const map={website:'website', app:'app', brand:'brand', dashboard:'dashboard', presentation:'presentation', video:'video'};
+    // try to infer service from cat
+    const catToService={website:'website', app:'app', brand:'brand', dashboard:'dashboard', presentation:'presentation', video:'video'};
+    if(catToService[tpl.cat]) orderState.service=catToService[tpl.cat];
+  }
+}
+
+function renderOrderStep(){
+  // hide all
+  for(let i=1;i<=4;i++) document.getElementById('orderStep'+i).classList.add('hidden');
+  document.getElementById('orderStep'+orderState.step).classList.remove('hidden');
+  document.getElementById('stepCounter').textContent=orderState.step;
+  // dots
+  for(let i=1;i<=4;i++){
+    const dot=document.getElementById('stepDot'+i);
+    const label=document.getElementById('stepLabel'+i);
+    if(i<orderState.step){ dot.className='w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-black'; dot.innerHTML='<i class="ri-check-line"></i>'; if(label) label.className='hidden sm:block text-xs font-bold text-emerald-600'; }
+    else if(i===orderState.step){ dot.className='w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-black'; dot.textContent=i; if(label) label.className='hidden sm:block text-xs font-bold text-zinc-900'; }
+    else{ dot.className='w-8 h-8 rounded-full bg-zinc-200 text-zinc-500 flex items-center justify-center text-sm font-black'; dot.textContent=i; if(label) label.className='hidden sm:block text-xs font-bold text-zinc-400'; }
+  }
+  // lines
+  for(let i=1;i<4;i++){
+    const line=document.getElementById('line'+i+(i+1));
+    if(i < orderState.step) line.classList.add('fill');
+    else line.classList.remove('fill');
+  }
+  // buttons
+  const prev=document.getElementById('orderPrev');
+  const next=document.getElementById('orderNext');
+  const submit=document.getElementById('orderSubmit');
+  if(orderState.step===1){ prev.classList.add('hidden'); next.classList.remove('hidden'); submit.classList.add('hidden'); submit.classList.remove('flex'); }
+  else if(orderState.step===4){ prev.classList.remove('hidden'); next.classList.add('hidden'); submit.classList.remove('hidden'); submit.classList.add('flex'); renderSummary(); }
+  else{ prev.classList.remove('hidden'); next.classList.remove('hidden'); submit.classList.add('hidden'); submit.classList.remove('flex'); }
+
+  if(orderState.step===2) renderDynamicQuestions();
+  if(orderState.step===4) renderAuthBox();
+}
+
+function renderDynamicQuestions(){
+  const cat=orderState.service||'default';
+  const qs=dynamicMap[cat]||dynamicMap['default'];
+  const c=document.getElementById('dynamicQuestions');
+  c.innerHTML=qs.map((q, idx)=>`
+    <div>
+      <label class="text-sm font-bold">${q.q}</label>
+      <div class="mt-2">
+        ${q.type==='radio'? `<div class="flex flex-wrap gap-2">${q.opts.map(o=>`<label class="cursor-pointer"><input type="radio" name="dq${idx}" value="${o}" class="peer hidden"><span class="block px-4 py-2 rounded-full border border-zinc-200 bg-white text-sm font-medium peer-checked:bg-zinc-900 peer-checked:text-white peer-checked:border-zinc-900 transition">${o}</span></label>`).join('')}</div>` : ''}
+        ${q.type==='select'? `<select data-dq="${idx}" class="w-full px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">${q.opts.map(o=>`<option>${o}</option>`).join('')}</select>` : ''}
+        ${q.type==='check'? `<div class="flex flex-wrap gap-2">${q.opts.map(o=>`<label class="cursor-pointer"><input type="checkbox" value="${o}" data-dq="${idx}" class="peer hidden"><span class="block px-4 py-2 rounded-full border border-zinc-200 bg-white text-sm font-medium peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition">${o}</span></label>`).join('')}</div>` : ''}
+        ${q.type==='text'? `<input data-dq="${idx}" type="text" placeholder="اكتب إجابتك..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 bg-white text-sm">` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAuthBox(){
+  const logged=document.getElementById('orderAuthLogged');
+  const guest=document.getElementById('orderAuthGuest');
+  if(currentUser){
+    logged.classList.remove('hidden');
+    guest.classList.add('hidden');
+    document.getElementById('summaryUserName').textContent=currentUser.name;
+    document.getElementById('summaryUserEmail').textContent=currentUser.email;
+  }else{
+    logged.classList.add('hidden');
+    guest.classList.remove('hidden');
+  }
+}
+
+function renderSummary(){
+  const s=services.find(x=>x.id===orderState.service);
+  const t=templates.find(x=>x.id===orderState.template);
+  const projName=document.getElementById('projName').value || '—';
+  const projBudget=document.getElementById('projBudget').value;
+  const projDate=document.getElementById('projDate').value || '—';
+  document.getElementById('orderSummary').innerHTML=`
+    <div class="flex justify-between"><span class="text-zinc-500">الخدمة</span><span class="font-black">${s? s.name : 'لم يتم الاختيار'}</span></div>
+    <div class="flex justify-between"><span class="text-zinc-500">القالب المختار</span><span class="font-bold">${t? t.title : 'بدون قالب (تصميم مخصص)'}</span></div>
+    <div class="flex justify-between"><span class="text-zinc-500">اسم المشروع</span><span class="font-bold">${projName}</span></div>
+    <div class="flex justify-between"><span class="text-zinc-500">الميزانية</span><span class="font-bold text-primary">${projBudget}</span></div>
+    <div class="flex justify-between"><span class="text-zinc-500">موعد التسليم</span><span class="font-bold">${projDate}</span></div>
+    <div class="h-px bg-zinc-200 my-1"></div>
+    <div class="flex justify-between text-sm"><span class="text-zinc-500">الوقت المتوقع</span><span class="font-black">7-14 يوم عمل</span></div>
+    <div class="flex justify-between text-sm"><span class="text-zinc-500">يشمل</span><span class="font-bold">تصميم + تطوير + دعم 30 يوم</span></div>
+  `;
+}
+
+function orderNext(){
+  if(orderState.step===1 && !orderState.service) return showToast('يرجى اختيار خدمة أولاً');
+  if(orderState.step===3){
+    if(!document.getElementById('projName').value.trim()) return showToast('يرجى إدخال اسم المشروع');
+    if(!document.getElementById('projDesc').value.trim()) return showToast('يرجى وصف المشروع بإيجاز');
+  }
+  if(orderState.step<4){ orderState.step++; renderOrderStep(); document.querySelector('#orderModal .flex-1').scrollTop=0; }
+}
+function orderPrev(){
+  if(orderState.step>1){ orderState.step--; renderOrderStep(); }
+}
+function orderSubmit(){
+  if(!document.getElementById('orderAgree').checked) return showToast('يرجى الموافقة على الشروط');
+  if(!currentUser){
+    const name=document.getElementById('orderName').value.trim();
+    const phone=document.getElementById('orderPhone').value.trim();
+    const email=document.getElementById('orderEmail').value.trim();
+    if(!name||!phone||!email) return showToast('يرجى تعبئة بيانات التواصل');
+    currentUser={name, phone, email};
+    localStorage.setItem('asg_user', JSON.stringify(currentUser));
+    updateAuthUI();
+  }
+  closeOrder();
+  showToast('تم استلام طلبك بنجاح! رقم الطلب #ASG-'+Math.floor(1000+Math.random()*9000)+' — سنتواصل خلال ساعتين 🚀');
+  // reset
+  orderState={step:1, service:null, template:null, answers:{}};
+  document.getElementById('projName').value=''; document.getElementById('projDesc').value=''; document.getElementById('orderAgree').checked=false;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.remove('hidden');
+  setTimeout(()=> t.classList.add('hidden'), 3500);
+}
+</script>
+</body>
+</html>
